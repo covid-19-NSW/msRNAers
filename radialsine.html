@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>放射线条生成器</title>
+    <script src="https://d3js.org/d3.v4.js"></script>
+</head>
+
+<body>
+<script>
+    let svg = d3.select('body')
+        .append('svg')
+        .attr('width', 400)
+        .attr('height', 400)
+        .style('background-opacity', 0)
+
+
+    let angles0 = d3.range(0, Math.PI, Math.PI / 360);
+    let line0 = d3.lineRadial()
+        .curve(d3.curveCatmullRom)
+        .angle((d) => { return d })
+        .radius((d) => { return (80 + 10 * Math.sin(10 * d)) })
+
+    let angles1 = d3.range(Math.PI/2, Math.PI, Math.PI / 360);
+    let line1 = d3.lineRadial()
+        .curve(d3.curveCatmullRom)
+        .angle((d) => { return d })
+        .radius((d) => { return (80 + 10 * Math.sin(10 * d)) })
+
+    let angles2 = d3.range(Math.PI,  3 * Math.PI / 2, Math.PI / 360);
+    let line2 = d3.lineRadial()
+        .curve(d3.curveCatmullRom)
+        .angle((d) => { return d })
+        .radius((d) => { return (80 + 10 * Math.sin(10 * d)) })
+
+    let angles3 = d3.range(3 * Math.PI / 2, 2 * Math.PI, Math.PI / 360);
+    let line3 = d3.lineRadial()
+        .curve(d3.curveCatmullRom)
+        .angle((d) => { return d })
+        .radius((d) => { return (80 + 10 * Math.sin(200 * d)) })
+
+    svg.append('g')
+        .attr("transform", "translate(200,200)")
+        .append('path')
+        .attr('d', line0(angles0))
+        .attr("stroke", "#000")
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+
+    svg.append('g')
+        .attr("transform", "translate(200,200)")
+        .append('path')
+        .attr('d', line1(angles1))
+        .attr("stroke", "#F0F")
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+
+    svg.append('g')
+        .attr("transform", "translate(200,200)")
+        .append('path')
+        .attr('d', line2(angles2))
+        .attr("stroke", "#0F0")
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+
+    svg.append('g')
+        .attr("transform", "translate(200,200)")
+        .append('path')
+        .attr('d', line3(angles3))
+        .attr("stroke", "#9FF")
+        .attr("stroke-width", 2)
+        .attr("fill", "none")
+
+
+</script>
+</body>
+
+</html>

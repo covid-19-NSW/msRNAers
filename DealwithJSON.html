@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DealwithJSON</title>
+  <script src="./js/jquery.min.js"></script>
+  <script src="./js/jquery-ui.min.js"></script>
+  <script src="./js/d3.v3.js"></script>
+  <script src="./js/d3.v4_2.js"></script>
+  <script src="./js/d3.v4.js"></script>
+</head>
+<body>
+<div class="content" id = "content">
+
+</div>
+
+
+<script type="text/javascript">
+    var GlobalObj = {
+        "links": [],
+        "nodes": []
+    };
+    function FindData (getResult, getFinal){
+
+        console.log(1);
+        d3.json("./Datafiles/lga-v2.json", function(error, data_lga) {
+
+            // var nodesarrlength = data_lga["nodes"].length;
+            // var nodearr = new Array(nodesarrlength);
+            // GlobalObj.nodes = nodearr;
+            getResult(data_lga, getFinal);
+        })
+
+
+    }
+
+    function getResult(data_lga, getFinal){
+        console.log(2);
+        d3.json("./Datafiles/14_days_Result_v4.json", function(error, data_dayresult) {
+            console.log(data_dayresult);
+            getFinal(data_lga, data_dayresult);
+
+        })
+
+
+
+    }
+
+    function getFinal(data_lga, data_dayresult){
+        console.log(3);
+
+        for (var i = 0; i < data_lga.nodes.length; i++){
+            GlobalObj.nodes.push({
+                "columns": data_lga.nodes[i].columns,
+                "id": data_lga.nodes[i].id,
+                "idname": data_lga.nodes[i].idname,
+                "lganame": data_lga.nodes[i].lganame,
+                "proportions": []
+            });
+            // var tempname = data_lga.nodes[i].lganame.split("(")[0];
+            // tempname = tempname.substring(0, tempname.length - 1);
+            for (var j = 0; j < data_dayresult.length; j++)
+            {
+                console.log(data_lga.nodes[i].id);
+                console.log(data_dayresult[j].lgacode);
+                console.log(typeof data_lga.nodes[i].id);
+                console.log(typeof data_dayresult[j].lgacode);
+                if (data_lga.nodes[i].id == data_dayresult[j].lgacode.toString()){
+                    console.log('match!');
+                    GlobalObj.nodes[i].proportions.push({
+                        "cases": data_dayresult[j].cases,
+                        "week": data_dayresult[j].fortnightcount,
+                        "weekcount":  data_dayresult[j].Week,
+                        "weekdate": data_dayresult[j].Date,
+                        "lgacode":  data_dayresult[j].lgacode.toString(),
+                        "nsw_lga_3": data_dayresult[j].nsw_lga_3,
+                        "valuetype": "Confirmed"
+
+                    })
+                }
+            }
+
+        }
+
+        // console.log(data_lga);
+        // console.log(data_dayresult);
+        // console.log(data_lga.nodes);
+        console.log(GlobalObj);
+        var content = document.getElementById("content");
+        content.innerText = JSON.stringify(GlobalObj);
+
+    }
+
+    FindData(getResult, getFinal);
+
+
+    //console.log(GlobalObj);
+
+
+</script>
+
+
+
+</body>
+</html>

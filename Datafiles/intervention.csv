@@ -1,0 +1,11 @@
+weekfrom,weekto,name,category
+5,10,NSW Lockdown,0
+6,9,Covid-19 Restriction,1
+10,11,New Covid-19 Restriction,1
+12,23,New NSW lockdown,0
+13,19,Restriction Tighten,1
+23,24,Northern Sydney Lockdown,0
+23,28,Restriction for Greater Sydney,1
+36,43,New Sydney Lockdown,0
+39,43,New Sydney Restriction,1
+45,48,NSW Reopening Restriction,1
